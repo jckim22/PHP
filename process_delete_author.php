@@ -22,6 +22,12 @@ $conn = connection();
         'id' => mysqli_real_escape_string($conn, $_POST['id']),
     );
     $sql = "
+        DELETE
+        FROM topic
+        WHERE author_id={$filtered['id']}
+    ";
+    mysqli_query($conn,$sql);
+    $sql = "
     DELETE
     FROM author
     WHERE id={$filtered['id']}
