@@ -17,17 +17,21 @@ $conn = connection();
 
 <body>
     <?php
-    settype($_POST['id'], 'integer');
+
     $filtered = array(
-        'id' => mysqli_real_escape_string($conn, $_POST['id']),
+        'name' => mysqli_real_escape_string($conn, $_POST['name']),
+        'profile' => mysqli_real_escape_string($conn, $_POST['profile']),
     );
-    $sql = "
-    DELETE
-    FROM topic
-    WHERE id={$filtered['id']}
+    $sql ="
+    INSERT INTO author
+    (name, profile)
+    VALUES(
+        '$filtered[name]',
+        '$filtered[profile]'
+    )
     ";
 
-    errorDectection($conn, $sql);
+    errorDectectionAuthor($conn, $sql);
 
 
     // header('Location: /index.php?id='.$_POST['id']);

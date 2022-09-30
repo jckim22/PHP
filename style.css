@@ -6,9 +6,10 @@ body {
     margin: 0;
 }
 
-a {
-    text-decoration: none;
-    color: black;
+#gird ol a {
+    
+    color:  blue;
+    font-size: larger;
 }
 
 h1 {
@@ -19,9 +20,12 @@ h1 {
     padding: 20px;
 }
 
-
+.author{
+        padding-left: 100px;
+}
 
 #grid ol {
+    
     border-right: 1px solid gray;
     width: 100px;
     margin: 0;

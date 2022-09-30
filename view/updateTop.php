@@ -1,5 +1,7 @@
 <?php
 require_once('lib/print.php');
+require_once('lib/sql.php');
+$conn = connection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +14,7 @@ require_once('lib/print.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 제목 -->
     <title><?php
-            print_title();
+            print_title($conn);
             ?></title>
 
     <link rel="stylesheet" href="style.css">
@@ -26,6 +28,7 @@ require_once('lib/print.php');
     </div>
     <div id="grid">
         <ol>
+            <a href="author.php">author</a>
             <a href="create.php">create</a>
             <?php if (isset($_GET['id'])) { ?>
                 <a href="update.php?id=<?= $_GET['id']; ?>">update</a>
@@ -38,29 +41,21 @@ require_once('lib/print.php');
             ?>
             <p style="margin:0; font-size: 30px; border-bottom:1px solid gray">List</p>
             <?php
-            print_list()
+            print_list($conn)
             ?>
 
         </ol>
 
         <div class="article">
             <form action="update_process.php" method="post">
-                <input type="hidden" name="old_title" value="<?= $_GET['id'] ?>">
-
-                <p><input type='title' name='title' placeholder="Title" value=<?php print_title(); ?>></p>
-                <p><textarea name="description" id="" cols="30" rows="10" value=<?php print_description(); ?>></textarea></p>
+                <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+                <p><input type='title' name='title' placeholder="Title" value=<?php print_title($conn); ?>></p>
+                <p><textarea name="description" id="" cols="30" rows="10" value=<?php print_description_update($conn); ?>></textarea></p>
                 <input type="submit">
 
 
             </form>
-            
-            <h2>
-                <?php
-                print_title();
-                ?>
-
-            </h2>
 
             <?php
-            print_description();
+            print_description($conn);
             ?>

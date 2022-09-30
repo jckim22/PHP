@@ -19,15 +19,20 @@ $conn = connection();
     <?php
     settype($_POST['id'], 'integer');
     $filtered = array(
-        'id' => mysqli_real_escape_string($conn, $_POST['id']),
+        'id' =>  mysqli_real_escape_string($conn, $_POST['id']),
+        'name' => mysqli_real_escape_string($conn, $_POST['name']),
+        'profile' => mysqli_real_escape_string($conn, $_POST['profile']),
     );
     $sql = "
-    DELETE
-    FROM topic
-    WHERE id={$filtered['id']}
+    UPDATE author
+    SET
+    profile = '{$filtered['profile']}',
+    name = '{$filtered['name']}'
+    WHERE
+    id={$filtered['id']}
     ";
 
-    errorDectection($conn, $sql);
+    errorDectectionAuthor($conn, $sql);
 
 
     // header('Location: /index.php?id='.$_POST['id']);

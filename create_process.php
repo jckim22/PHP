@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<?php
+require_once('lib/print.php');
+require_once('lib/sql.php');
+$conn=connection();
+?>
+
 <html lang="en">
 
 <head>
@@ -10,8 +17,33 @@
 
 <body>
     <?php
-    file_put_contents('data/' . $_POST['title'], $_POST['description']);
-    header('Location: /index.php?id=' . $_POST['title']);
+    
+    // file_put_contents('data/' . $_POST['title'], $_POST['description']);
+    // header('Location: /index.php?id=' . $_POST['title']);
+
+    //사용자가 보낸 $_POST 데이터를 그대로 받으면 보안 상의 문제가 생길 수 있다.
+    $filtered = array(
+        'title'=>mysqli_real_escape_string($conn,$_POST['title']),
+        'description'=>mysqli_real_escape_string($conn,$_POST['description']),
+        'author_id'=>$_POST['author_id']
+
+    );
+    $sql = "
+    INSERT INTO topic
+    (title, description, created,author_id)
+    VALUES(
+        '{$filtered['title']}',
+        '{$filtered['description']}', NOW()
+        ,{$filtered['author_id']}
+    )
+    ";
+    
+    errorDectection($conn,$sql);
+
+    
+    // header('Location: /index.php?id='.$_POST['id']);
+    
+    
     ?>
 </body>
 

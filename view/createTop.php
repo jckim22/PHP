@@ -1,6 +1,18 @@
 <?php
 require_once('lib/print.php');
+require_once('lib/sql.php');
+$conn = connection();
+
+
+$sql = "SELECT * FROM author ";
+$result = mysqli_query($conn, $sql);
+$select_form = '<select name="author_id">';
+while ($row = mysqli_fetch_array($result)) {
+    $select_form .= '<option value="' . $row['id'] . '">' . $row['name'];
+}
+$select_form .= '</select>';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +24,7 @@ require_once('lib/print.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 제목 -->
     <title><?php
-            print_title();
+            print_title($conn);
             ?></title>
 
     <link rel="stylesheet" href="style.css">
@@ -26,6 +38,7 @@ require_once('lib/print.php');
     </div>
     <div id="grid">
         <ol>
+            <a href="author.php">author</a>
             <a href="create.php">create</a>
             <?php if (isset($_GET['id'])) { ?>
                 <a href="update.php?id=<?= $_GET['id']; ?>">update</a>
@@ -38,7 +51,7 @@ require_once('lib/print.php');
             ?>
             <p style="margin:0; font-size: 30px; border-bottom:1px solid gray">List</p>
             <?php
-            print_list()
+            print_list($conn)
             ?>
 
         </ol>
@@ -46,22 +59,22 @@ require_once('lib/print.php');
         <div class="article">
             <form action="create_process.php" method="post">
                 <p>
+
                     <input type="text" name='title' placeholder="Title">
                 </p>
                 <p>
                     <textarea name="description" id="" cols="30" rows="10"></textarea>
                 </p>
+                <?= $select_form ?>
                 <p>
                     <input type="submit">
                 </p>
+
             </form>
-            <h2>
-                <?php
-                print_title();
-                ?>
 
-            </h2>
+            </p>
+        </div>
+    </div>
+</body>
 
-            <?php
-            print_description();
-            ?>
+</html>

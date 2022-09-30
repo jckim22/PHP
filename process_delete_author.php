@@ -23,11 +23,11 @@ $conn = connection();
     );
     $sql = "
     DELETE
-    FROM topic
+    FROM author
     WHERE id={$filtered['id']}
     ";
 
-    errorDectection($conn, $sql);
+    errorDectectionAuthor($conn, $sql);
 
 
     // header('Location: /index.php?id='.$_POST['id']);

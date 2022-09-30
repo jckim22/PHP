@@ -1,5 +1,7 @@
 <?php
 require_once('lib/print.php');
+require_once('lib/sql.php');
+$conn=connection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +14,7 @@ require_once('lib/print.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 제목 -->
     <title><?php
-            print_title();
+            print_title($conn);
             ?></title>
 
     <link rel="stylesheet" href="style.css">
@@ -20,17 +22,18 @@ require_once('lib/print.php');
 </head>
 
 <body>
-    <h1 class="saw"><a href="index.php">Ju Chan's WEB</a></h1>
+    <h1 class="saw"><a class='title' href="index.php">Ju Chan's WEB</a></h1>
     <div class="toggle">
         <input id="night-day" type="button" value="night" onclick="nightHandle()">
     </div>
     <div id="grid">
         <ol>
+            <a href="author.php">author</a>
             <a href="create.php">create</a>
             <?php if (isset($_GET['id'])) { ?>
                 <a href="update.php?id=<?= $_GET['id']; ?>">update</a>
                 <form action="delete_process.php" method='post'>
-                    <input type="hidden" name='id' value="<?=$_GET['id']?>">
+                    <input type="hidden" name='id' value="<?= $_GET['id'] ?>">
                     <input type="submit" value="delete">
                 </form>
             <?php
@@ -38,20 +41,13 @@ require_once('lib/print.php');
             ?>
             <p style="margin:0; font-size: 30px; border-bottom:1px solid gray">List</p>
             <?php
-            print_list()
+            print_list($conn)
             ?>
 
         </ol>
 
         <div class="article">
 
-            <h2>
-                <?php
-                print_title();
-                ?>
-
-            </h2>
-
             <?php
-            print_description();
+            print_description($conn);
             ?>
